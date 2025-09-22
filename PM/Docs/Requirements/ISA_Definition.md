@@ -1,4 +1,4 @@
-# ISA Definition
+# CS104 CPU Simulator —ISA Definition
 
 [← Back to Project Management Index](../../README.md)
 

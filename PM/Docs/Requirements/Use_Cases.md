@@ -1,4 +1,4 @@
-# Use Cases
+# CS104 CPU Simulator — Use Cases
 
 [← Back to Project Management Index](../../README.md)
 
