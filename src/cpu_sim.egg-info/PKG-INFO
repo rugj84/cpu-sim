@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: cpu-sim
+Version: 0.1.0
+Summary: A Python simulator of a CPU with Cache and Memory Bus, supporting a subset of MIPS instructions.
+Author: Javier Ruiz Galan
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Dynamic: license-file
+
+# CPU Simulator
+
+A CPU simulation project.
+
+## Getting Started
+
+This project simulates CPU operations and instruction execution.
+
+## Development
+
+More details to be added as the project develops.

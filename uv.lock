@@ -108,8 +108,10 @@ wheels = [
 [[package]]
 name = "cpu-sim"
 version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
+source = { editable = "." }
+
+[package.optional-dependencies]
+dev = [
     { name = "black" },
     { name = "flake8" },
     { name = "isort" },
@@ -119,12 +121,13 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "black", specifier = ">=25.9.0" },
-    { name = "flake8", specifier = ">=7.3.0" },
-    { name = "isort", specifier = ">=6.0.1" },
-    { name = "pytest", specifier = ">=8.4.2" },
-    { name = "pytest-cov", specifier = ">=7.0.0" },
+    { name = "black", marker = "extra == 'dev'" },
+    { name = "flake8", marker = "extra == 'dev'" },
+    { name = "isort", marker = "extra == 'dev'" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytest-cov", marker = "extra == 'dev'" },
 ]
+provides-extras = ["dev"]
 
 [[package]]
 name = "flake8"
