@@ -1,5 +1,1 @@
-__init__
-cache
-cpu
-main
-memory_bus
+cpu_sim

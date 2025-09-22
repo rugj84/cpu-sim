@@ -6,6 +6,8 @@ PY_VERSION ?= 3.13
 
 # Paths
 VENV_DIR := .venv
+export PYTHONPATH := src
+
 
 .PHONY: help venv install dev-install sync lock update freeze run test coverage fmt lint fix lint-fix clean reset
 
@@ -61,17 +63,20 @@ freeze:
 	uv pip freeze > requirements.lock.txt
 	@echo "requirements.lock.txt updated."
 
-run:
-	@echo ">>> Running CPU Simulator"
-	uv run python -m src.main
-
 test:
+	@echo ">>> Ensuring dev deps"
+	uv sync --group dev
 	@echo ">>> Running tests"
 	uv run pytest
 
 coverage:
 	@echo ">>> Running tests with coverage"
 	uv run pytest -v --cov=src --cov-report=term-missing
+
+run:
+	@echo ">>> Running CPU Simulator"
+	uv run python -m cpu_sim.main
+
 
 fmt:
 	@echo ">>> Formatting with black and isort"

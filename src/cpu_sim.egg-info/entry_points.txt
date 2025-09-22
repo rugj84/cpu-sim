@@ -1,0 +1,2 @@
+[console_scripts]
+cpu-sim = cpu_sim.main:main

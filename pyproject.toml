@@ -2,32 +2,51 @@
 name = "cpu-sim"
 version = "0.1.0"
 description = "A Python simulator of a CPU with Cache and Memory Bus, supporting a subset of MIPS instructions."
-authors = [
-    { name = "Javier Ruiz Galan" }
-]
+authors = [{ name = "Javier Ruiz Galan" }]
 readme = "README.md"
 requires-python = ">=3.13"
-
 dependencies = []
 
 [project.optional-dependencies]
 dev = [
-    "pytest",
-    "pytest-cov",
-    "black",
-    "isort",
-    "flake8"
+  "pytest",
+  "pytest-cov",
+  "black",
+  "isort",
+  "flake8"
 ]
 
+[project.scripts]
+cpu-sim = "cpu_sim.main:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.2",
+  "pytest-cov>=5.0",
+  "black>=24.0",
+  "isort>=5.13",
+  "flake8>=7.0",
+  "pre-commit>=3.7"
+]
+
+
 [tool.pytest.ini_options]
-addopts = "-v --cov=src --cov-report=term-missing"
+# Point coverage at the actual package name
+addopts = "-v --cov=cpu_sim --cov-report=term-missing"
 
 [tool.black]
 line-length = 88
-target-version = ['py313']
+target-version = ["py313"]
 
 [tool.isort]
 profile = "black"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["cpu_sim*"]
 
 [build-system]
 requires = ["setuptools", "wheel"]

@@ -1,0 +1,33 @@
+>>> Ensuring dev deps
+uv sync --group dev
+>>> Running tests
+uv run pytest
+============================= test session starts ==============================
+platform darwin -- Python 3.13.7, pytest-8.4.2, pluggy-1.6.0 -- /Users/jrg84/Documents/Software/cpu-sim/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/jrg84/Documents/Software/cpu-sim
+configfile: pyproject.toml
+plugins: cov-7.0.0
+collecting ... collected 7 items
+
+tests/test_cpu.py::test_cpu_initialization PASSED                        [ 14%]
+tests/test_cpu_exec.py::test_addi_then_add_execution PASSED              [ 28%]
+tests/test_cpu_exec.py::test_branch_and_jump_flow PASSED                 [ 42%]
+tests/test_cpu_exec.py::test_cache_on_writeback_flush PASSED             [ 57%]
+tests/test_main.py::test_main_smoke PASSED                               [ 71%]
+tests/test_parsing.py::test_parse_program_basic PASSED                   [ 85%]
+tests/test_parsing.py::test_memory_bus_load_and_rw PASSED                [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.13.7-final-0 _______________
+
+Name                        Stmts   Miss  Cover   Missing
+---------------------------------------------------------
+src/cpu_sim/__init__.py         0      0   100%
+src/cpu_sim/cache.py           46     14    70%   27-30, 34-38, 42-43, 53-55, 62, 69
+src/cpu_sim/cpu.py            162     40    75%   17, 27-28, 60, 63-66, 102-103, 109, 114, 120, 131-133, 144, 154, 158-162, 166-170, 181-184, 188-191, 199, 211, 221, 231, 242
+src/cpu_sim/main.py            28     28     0%   1-58
+src/cpu_sim/memory_bus.py      26      1    96%   28
+---------------------------------------------------------
+TOTAL                         262     83    68%
+============================== 7 passed in 0.09s ===============================

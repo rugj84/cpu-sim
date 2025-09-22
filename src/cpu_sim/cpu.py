@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from typing import List, Tuple, Dict, Optional
 
 from .cache import Cache
+from .memory_bus import MemoryBus
 
 
 Register = str
@@ -44,11 +45,19 @@ class CPU:
     - LW/SW compute address = Rs + offset (integers).
     """
 
-    cache: Cache
+    cache: Optional[Cache] = None
     registers: Dict[Register, int] = field(default_factory=lambda: {f"R{i}": 0 for i in range(8)})
     pc: int = 0
     halted: bool = False
     trace: bool = True
+
+    @property
+    def PC(self) -> int:
+        return self.pc
+
+    @PC.setter
+    def PC(self, value: int) -> None:
+        self.pc = value
 
     def reset(self) -> None:
         for k in self.registers:

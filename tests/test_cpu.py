@@ -1,6 +1,5 @@
-import pytest
 
-from src.cpu import CPU
+from cpu_sim.cpu import CPU
 
 def test_cpu_initialization():
     cpu = CPU()
