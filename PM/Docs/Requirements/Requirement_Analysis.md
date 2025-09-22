@@ -1,6 +1,6 @@
 # CS104 CPU Simulator — Requirement Analysis
 
-[← Back to Project Management Index](../PM/README.md)
+[← Back to Project Management Index](../../README.md)
 
 **Author:** Javier Ruiz Galan  
 **Date:** September 2025  
