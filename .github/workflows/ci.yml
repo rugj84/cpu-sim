@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "tests/**"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "tests/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        shell: bash
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          uv --version
+
+      - name: Cache uv and virtualenv
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            .venv
+          key: ${{ runner.os }}-uv-${{ hashFiles('pyproject.toml', 'uv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
+
+      - name: Sync dev dependencies
+        run: uv sync --group dev
+
+      - name: Run tests (pytest + coverage)
+        env:
+          PYTHONWARNINGS: default
+        run: |
+          uv run pytest -q --maxfail=1 --disable-warnings \
+            --cov=. --cov-report=term-missing --cov-report=xml:coverage.xml
+
+      - name: Upload coverage.xml
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Upload HTML coverage report
+        if: always()
+        run: uv run coverage html -d htmlcov
+      - name: Publish HTML coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: htmlcov/
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Package sdist/wheel (optional)
+        if: always()
+        run: |
+          uv build
+      - name: Upload build artifacts (optional)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/*
+          if-no-files-found: ignore
+          retention-days: 7
