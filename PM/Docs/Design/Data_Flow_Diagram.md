@@ -31,6 +31,7 @@ graph TD
   IF -->|Load instructions| S
   DF -->|Load data| S
   S -->|Logs results| CO
+```
 
 ## 2. Level 1 
 
