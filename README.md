@@ -121,11 +121,11 @@ pytest --cov=cpu_sim --cov-report=term-missing
 ---
 
 ## 📖 Documentation
-See [Docs/](docs/) for:
-- [System Architecture](docs/System_Architecture.md)
-- [ISA Definition](docs/ISA_Definition.md)
-- [Class Diagrams](docs/Class_Diagrams.md)
-- [Use Cases](docs/Use_Cases.md)
+See [Docs/](./PM/README.md) for:
+- [System Architecture](./PM/Docs/Design/System_Architecture.md)
+- [ISA Definition](./PM/Docs/Requirements/ISA_Definition.md)
+- [Class Diagrams](./PM/Docs/Design/Class_Diagrams.md)
+- [Use Cases](./PM/Docs/Requirements/Use_Cases.md)
 
 ---
 
