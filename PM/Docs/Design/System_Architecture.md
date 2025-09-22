@@ -39,7 +39,7 @@ graph LR
     CTRL[Control/Decoder] --- ID
     FWD[Forwarding/ Hazard] --- EX
   end
-  CPU -- load/store --> CACHE[Cache (on/off)]
+  CPU -- load/store --> CACHE{Cache on?}
   CACHE -- miss/hit --> BUS[Memory Bus]
   BUS --> MEMARRAY[(Main Memory)]
 ```
