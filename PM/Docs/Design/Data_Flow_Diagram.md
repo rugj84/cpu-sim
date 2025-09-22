@@ -17,8 +17,8 @@ At a glance, the **CPU Simulator** is a single system that:
 graph TD
   %% External Entities
   U[User]
-  IF[Instruction File (instruction_input.txt)]
-  DF[Data File (data_input.txt)]
+  IF[Instruction File]
+  DF[Data File]
   CO[Console Output]
 
   %% System Boundary
@@ -27,12 +27,13 @@ graph TD
   end
 
   %% Flows
-  U -->|run/start config| S
-  IF -->|load instructions| S
-  DF -->|load initial data| S
-  S -->|logs, traces, results| CO
+  U -->|Run config| S
+  IF -->|Load instructions| S
+  DF -->|Load data| S
+  S -->|Logs results| CO
 
-## 2. Level 1 - Detailed process flow
+## 2. Level 1 (Detailed Process Flow)
+
 graph TD
   %% External Entities
   U[User]
@@ -46,24 +47,23 @@ graph TD
     P0(Loader)
     P1(Fetch)
     P2(Decode)
-    P3(Execute / ALU)
+    P3(Execute ALU)
     P4(Memory Access)
     P5(Write Back)
     P6(Cache Controller)
-    P7(Program Control: PC & Flow)
+    P7(Program Control)
 
     %% Data Stores
-    D1[(Instruction Store/Queue)]
+    D1[(Instruction Store)]
     D2[(Register File)]
     D3[(Cache)]
-    D4[(Memory Bus / Main Memory)]
-    D5[(Trace Buffer / Logger)]
-
+    D4[(Memory Bus)]
+    D5[(Trace Logger)]
   end
 
   %% Initialization
   IF -->|Instructions| P0
-  DF -->|Address,Value pairs| P0
+  DF -->|Address Value pairs| P0
   U  -->|Run config| P0
 
   P0 -->|Parsed instructions| D1
@@ -73,26 +73,26 @@ graph TD
   %% Pipeline
   P7 -->|PC| P1
   P1 -->|Instr| P2
-  P2 -->|Control signals, operands| P3
-  P3 -->|ALU result, branch info| P4
-  P3 -->|Write-back data (R-type)| P5
-  P4 -->|Load data (for LW)| P5
+  P2 -->|Control signals operands| P3
+  P3 -->|ALU result branch info| P4
+  P3 -->|Write back data R type| P5
+  P4 -->|Load data LW| P5
   P5 -->|Updated regs| D2
 
   %% Operand sourcing
-  D2 -->|Rs, Rt values| P2
+  D2 -->|Rs Rt values| P2
   P5 -->|Reg write| D2
 
-  %% Memory/Cache path
-  P4 -->|Read/Write req| P6
-  P6 -->|Hit: serve/commit| D3
+  %% Memory Cache path
+  P4 -->|Read Write req| P6
+  P6 -->|Hit serve commit| D3
   P6 -->|Miss or flush| D4
   D3 -->|Data on hit| P4
   D4 -->|Data on miss| P4
 
   %% Control flow updates
-  P2 -->|Branch/jump signals| P7
-  P3 -->|Branch taken?| P7
+  P2 -->|Branch jump signals| P7
+  P3 -->|Branch taken| P7
 
   %% Logging
   P0 --> D5
@@ -108,7 +108,7 @@ graph TD
 
   %% Termination
   P2 -->|HALT detected| P7
-  P7 -->|stop signal| CO
+  P7 -->|Stop signal| CO
 
 ## 3. Notations
 - External Entities (square): Sources/sinks outside the system (User, files, console).
